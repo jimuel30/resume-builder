@@ -23,7 +23,7 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public List<Skill> searchSkill(String skillPrefix) {
-        return skillRepo.findBySkillContainingIgnoreCase(skillPrefix);
+        return skillRepo.findBySkillNameContainingIgnoreCase(skillPrefix);
     }
 
 

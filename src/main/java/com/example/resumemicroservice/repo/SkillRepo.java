@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface SkillRepo extends JpaRepository<Skill, Long> {
-    List<Skill> findBySkillContainingIgnoreCase(String skillName);
+    List<Skill> findBySkillNameContainingIgnoreCase(String skillName);
 }

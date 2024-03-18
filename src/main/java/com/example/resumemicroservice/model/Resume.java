@@ -1,10 +1,23 @@
 package com.example.resumemicroservice.model;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
-public class Resume {
+@Data
+@Builder
+@Table(name="resumes")
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+public class Resume{
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long resumeId;
     private String email;
 
@@ -18,9 +31,16 @@ public class Resume {
 
     private String city;
 
+    @OneToMany(mappedBy = "educationId",fetch = FetchType.EAGER)
     private List<Education> educationList;
+
+    @OneToMany(mappedBy = "experienceId",fetch = FetchType.EAGER)
     private List<Experience> experienceList;
+    @OneToMany(mappedBy = "socialId",fetch = FetchType.EAGER)
     private List<Social> socialList;
 
-    private List<Resume> resumeList;
+    @OneToMany(mappedBy = "skillId",fetch = FetchType.EAGER)
+    private List<Skill> skillList;
+
+
 }

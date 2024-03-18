@@ -1,5 +1,6 @@
 package com.example.resumemicroservice.model;
 
+import com.example.resumemicroservice.enums.RoleType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,14 +9,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@Table(name="responsibilities")
+@Table(name="roles")
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Responsibility {
-
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long responsibilityId;
-    private String responsibility;
+    private long roleId;
+    private RoleType roleType;
 }
