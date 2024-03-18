@@ -7,6 +7,7 @@ import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SkillServiceImpl implements SkillService {
@@ -17,8 +18,9 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public Skill createSkill(@NonNull Skill skill) {
-        return skillRepo.save(skill);
+    public Skill createSkill(final Skill skill) {
+        final  Optional<Skill> optionalSkill = skillRepo.findBySkillNameIgnoreCase(skill.getSkillName());
+        return optionalSkill.orElseGet(() -> skillRepo.save(skill));
     }
 
     @Override

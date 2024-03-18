@@ -34,8 +34,19 @@ public class User implements UserDetails {
     private String lastName;
 
     private String mobileNumber;
-
     private String city;
+
+    private String profession;
+
+    private Boolean isAccountNonExpired;
+
+    private Boolean isAccountNonLocked;
+
+    private Boolean isCredentialsNonExpired;
+
+    private Boolean isEnabled;
+
+
     @OneToMany(mappedBy = "roleId",fetch = FetchType.EAGER)
     private List<Role> roleList;
 
@@ -68,21 +79,21 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return isAccountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return isAccountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return isCredentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 }

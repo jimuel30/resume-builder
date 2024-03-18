@@ -48,6 +48,10 @@ public class UserServiceImpl implements UserService {
         user.setLastName(registerRequest.getLastName());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setCity(registerRequest.getCity());
+        user.setIsEnabled(true);
+        user.setIsAccountNonExpired(true);
+        user.setIsAccountNonLocked(true);
+        user.setIsCredentialsNonExpired(true);
         return userRepo.save(user);
     }
 

@@ -57,6 +57,7 @@ public class AuthServiceImpl implements AuthService {
             ));
 
             final User user = userService.getUserByEmail(request.getEmail());
+            System.out.println(user);
 
             responseEntity = ResEntityUtil.success(generateSuccessAuthToken(user));
 

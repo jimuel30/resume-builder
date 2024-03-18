@@ -25,9 +25,10 @@ public class Resume{
 
     private String firstName;
 
-
     private String middleName;
     private String lastName;
+
+    private String profession;
 
     private String city;
 
