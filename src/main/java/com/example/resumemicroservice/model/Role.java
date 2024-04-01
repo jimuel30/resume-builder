@@ -18,4 +18,5 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long roleId;
     private RoleType roleType;
+    private long resumeId;
 }

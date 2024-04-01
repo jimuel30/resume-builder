@@ -2,7 +2,7 @@ package com.example.resumemicroservice.actionservice.impl;
 
 import com.example.resumemicroservice.actionservice.SearchService;
 import com.example.resumemicroservice.domain.Response;
-import com.example.resumemicroservice.service.SkillService;
+import com.example.resumemicroservice.modelservice.SkillService;
 import com.example.resumemicroservice.util.ResEntityUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public ResponseEntity<Response> searchSkillContainingPrefix(String skillPrefix) {
-        return ResEntityUtil.success(skillService.searchSkill(skillPrefix));
+        return ResEntityUtil.success(skillService.search(skillPrefix));
     }
 
 }

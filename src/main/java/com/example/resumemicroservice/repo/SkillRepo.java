@@ -1,5 +1,6 @@
 package com.example.resumemicroservice.repo;
 
+import com.example.resumemicroservice.model.Resume;
 import com.example.resumemicroservice.model.Skill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,6 @@ import java.util.Optional;
 public interface SkillRepo extends JpaRepository<Skill, Long> {
     List<Skill> findBySkillNameContainingIgnoreCase(String skillName);
     Optional<Skill> findBySkillNameIgnoreCase(String skillName);
+
+    Optional<Skill> findBySkillIdAndUserId(long skillId, long userId);
 }

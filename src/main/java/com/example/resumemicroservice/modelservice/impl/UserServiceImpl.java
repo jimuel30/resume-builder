@@ -1,4 +1,4 @@
-package com.example.resumemicroservice.service.impl;
+package com.example.resumemicroservice.modelservice.impl;
 
 import com.example.resumemicroservice.domain.RegisterRequest;
 import com.example.resumemicroservice.enums.RoleType;
@@ -6,7 +6,7 @@ import com.example.resumemicroservice.model.Role;
 import com.example.resumemicroservice.model.User;
 import com.example.resumemicroservice.repo.RoleRepo;
 import com.example.resumemicroservice.repo.UserRepo;
-import com.example.resumemicroservice.service.UserService;
+import com.example.resumemicroservice.modelservice.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User saveUser(RegisterRequest registerRequest){
+    public User save(RegisterRequest registerRequest){
         final Optional<Role> optionalRole = roleRepo.findById(1l);
         Role role = new Role();
         if(optionalRole.isEmpty()){
@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService {
         user.setRoleList(List.of(role));
         user.setEmail(registerRequest.getEmail());
         user.setFirstName(registerRequest.getFirstName());
+        user.setMiddleName(registerRequest.getMiddleName());
         user.setLastName(registerRequest.getLastName());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setCity(registerRequest.getCity());
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User getUserByEmail(final String email) {
+    public User getByEmail(final String email) {
         final Optional<User> user = userRepo.findByEmail(email);
         return user.orElse(null);
     }

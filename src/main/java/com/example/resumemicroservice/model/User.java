@@ -50,18 +50,18 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "roleId",fetch = FetchType.EAGER)
     private List<Role> roleList;
 
-    @OneToMany(mappedBy = "educationId",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userId",fetch = FetchType.EAGER)
     private List<Education> educationList;
 
-    @OneToMany(mappedBy = "experienceId",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userId",fetch = FetchType.EAGER)
     private List<Experience> experienceList;
-    @OneToMany(mappedBy = "socialId",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userId",fetch = FetchType.EAGER)
     private List<Social> socialList;
 
-    @OneToMany(mappedBy = "skillId",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userId",fetch = FetchType.EAGER)
     private List<Skill> skillList;
 
-    @OneToMany(mappedBy = "resumeId",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userId",fetch = FetchType.EAGER)
     private List<Resume> resumeList;
 
 

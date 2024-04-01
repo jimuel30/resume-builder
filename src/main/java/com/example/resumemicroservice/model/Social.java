@@ -19,5 +19,10 @@ public class Social{
     private long socialId;
     private String socialLink;
 
+    private String socialName;
+
+    private long userId;
+
+    private long resumeId;
 
 }

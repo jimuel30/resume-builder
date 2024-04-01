@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @Table(name="educations")
@@ -22,10 +24,11 @@ public class Education {
 
     private String course;
 
-    private int  startMonth;
-    private int  startYear;
+    private String startDate;
+    private String  endDate;
 
-    private int  entMonth;
-    private int  endYear;
+    private long userId;
+
+    private long resumeId;
 
 }

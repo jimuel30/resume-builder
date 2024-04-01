@@ -1,8 +1,8 @@
-package com.example.resumemicroservice.service.impl;
+package com.example.resumemicroservice.modelservice.impl;
 
 import com.example.resumemicroservice.model.Responsibility;
 import com.example.resumemicroservice.repo.ResponsibilityRepo;
-import com.example.resumemicroservice.service.ResponsibilityService;
+import com.example.resumemicroservice.modelservice.ResponsibilityService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +15,7 @@ public class ResponsibilityServiceImpl implements ResponsibilityService {
     }
 
     @Override
-    public Responsibility createResponsibility(Responsibility responsibility) {
+    public Responsibility save(Responsibility responsibility) {
         return responsibilityRepo.save(responsibility);
     }
 }

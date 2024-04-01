@@ -18,4 +18,7 @@ public class Skill{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long skillId;
     private String skillName;
+
+    private long userId;
+    private long resumeId;
 }

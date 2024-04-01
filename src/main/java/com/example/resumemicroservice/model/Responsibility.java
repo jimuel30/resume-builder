@@ -18,4 +18,6 @@ public class Responsibility {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long responsibilityId;
     private String responsibility;
+
+    private long experienceId;
 }

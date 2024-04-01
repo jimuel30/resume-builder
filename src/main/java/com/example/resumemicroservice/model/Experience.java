@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -22,12 +23,16 @@ public class Experience {
 
     private String companyName;
 
-    @OneToMany(mappedBy = "responsibilityId",fetch = FetchType.EAGER)
+    private String position;
+
+    @OneToMany(mappedBy = "experienceId",fetch = FetchType.EAGER)
     private List<Responsibility> responsibilityList;
 
-    private int  startMonth;
-    private int  startYear;
+    private String startDate;
+    private String  endDate;
 
-    private int  entMonth;
-    private int  endYear;
+    private long userId;
+
+    private long resumeId;
+
 }

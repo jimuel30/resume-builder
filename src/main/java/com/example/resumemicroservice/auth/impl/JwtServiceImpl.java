@@ -3,7 +3,7 @@ package com.example.resumemicroservice.auth.impl;
 import com.example.resumemicroservice.auth.JwtService;
 import com.example.resumemicroservice.domain.Token;
 import com.example.resumemicroservice.model.User;
-import com.example.resumemicroservice.service.UserService;
+import com.example.resumemicroservice.modelservice.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -67,7 +67,7 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public Token generateTokenFromRefreshToken(final String token) {
         final String email = extractUserName(token);
-        final User user = userService.getUserByEmail(email);
+        final User user = userService.getByEmail(email);
         Token jwtToken = null;
 
         if(user!=null){
@@ -85,7 +85,7 @@ public class JwtServiceImpl implements JwtService {
     public User extractUser(final String token) {
         final String jwt = token.substring(7);
         final String email = extractUserName(jwt);
-        return userService.getUserByEmail(email);
+        return userService.getByEmail(email);
     }
 
     @Override

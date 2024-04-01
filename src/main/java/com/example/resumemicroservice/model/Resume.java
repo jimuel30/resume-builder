@@ -21,8 +21,6 @@ public class Resume{
     private long resumeId;
     private String email;
 
-    private String password;
-
     private String firstName;
 
     private String middleName;
@@ -32,16 +30,19 @@ public class Resume{
 
     private String city;
 
-    @OneToMany(mappedBy = "educationId",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "resumeId",fetch = FetchType.EAGER)
     private List<Education> educationList;
 
-    @OneToMany(mappedBy = "experienceId",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "resumeId",fetch = FetchType.EAGER)
     private List<Experience> experienceList;
-    @OneToMany(mappedBy = "socialId",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "resumeId",fetch = FetchType.EAGER)
     private List<Social> socialList;
 
-    @OneToMany(mappedBy = "skillId",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "resumeId",fetch = FetchType.EAGER)
     private List<Skill> skillList;
+
+    private long userId;
+
 
 
 }

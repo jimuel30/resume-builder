@@ -4,7 +4,7 @@ import com.example.resumemicroservice.auth.AuthService;
 import com.example.resumemicroservice.auth.JwtService;
 import com.example.resumemicroservice.domain.*;
 import com.example.resumemicroservice.model.User;
-import com.example.resumemicroservice.service.UserService;
+import com.example.resumemicroservice.modelservice.UserService;
 import org.springframework.security.core.AuthenticationException;
 import com.example.resumemicroservice.util.ResEntityUtil;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +41,7 @@ public class AuthServiceImpl implements AuthService {
             responseEntity = ResEntityUtil.badRequest("Email already used");
         }
         else{
-            final User user = userService.saveUser(request);
+            final User user = userService.save(request);
             responseEntity = ResEntityUtil.success(generateSuccessAuthToken(user));
         }
         return responseEntity;
@@ -56,9 +56,7 @@ public class AuthServiceImpl implements AuthService {
                     request.getPassword()
             ));
 
-            final User user = userService.getUserByEmail(request.getEmail());
-            System.out.println(user);
-
+            final User user = userService.getByEmail(request.getEmail());
             responseEntity = ResEntityUtil.success(generateSuccessAuthToken(user));
 
         } catch (AuthenticationException e) {

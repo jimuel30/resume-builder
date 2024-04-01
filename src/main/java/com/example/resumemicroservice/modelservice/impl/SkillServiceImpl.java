@@ -1,9 +1,9 @@
-package com.example.resumemicroservice.service.impl;
+package com.example.resumemicroservice.modelservice.impl;
 
+import com.example.resumemicroservice.model.Education;
 import com.example.resumemicroservice.model.Skill;
 import com.example.resumemicroservice.repo.SkillRepo;
-import com.example.resumemicroservice.service.SkillService;
-import lombok.NonNull;
+import com.example.resumemicroservice.modelservice.SkillService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,14 +18,25 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public Skill createSkill(final Skill skill) {
+    public Skill save(final Skill skill) {
         final  Optional<Skill> optionalSkill = skillRepo.findBySkillNameIgnoreCase(skill.getSkillName());
         return optionalSkill.orElseGet(() -> skillRepo.save(skill));
     }
 
     @Override
-    public List<Skill> searchSkill(String skillPrefix) {
+    public List<Skill> search(String skillPrefix) {
         return skillRepo.findBySkillNameContainingIgnoreCase(skillPrefix);
+    }
+
+    @Override
+    public Skill delete(long skillId, long userId) {
+        final Optional<Skill> skillOptional = skillRepo.findBySkillIdAndUserId(skillId,userId);
+        Skill deletedSkill =null;
+        if(skillOptional.isPresent()){
+            deletedSkill =  skillOptional.get();
+            skillRepo.delete(deletedSkill);
+        }
+        return deletedSkill;
     }
 
 

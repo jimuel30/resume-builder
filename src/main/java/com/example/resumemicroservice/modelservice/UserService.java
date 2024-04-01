@@ -1,4 +1,4 @@
-package com.example.resumemicroservice.service;
+package com.example.resumemicroservice.modelservice;
 
 import com.example.resumemicroservice.domain.RegisterRequest;
 import com.example.resumemicroservice.model.User;
@@ -6,13 +6,13 @@ import com.example.resumemicroservice.model.User;
 public interface UserService {
 
 
-    User  saveUser(RegisterRequest registerRequest);
+    User save(RegisterRequest registerRequest);
 
     boolean isExistingByEmail( String email);
 
 
 
-    User getUserByEmail(String email);
+    User getByEmail(String email);
 
 
 

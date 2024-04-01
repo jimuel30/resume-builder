@@ -1,10 +1,10 @@
-package com.example.resumemicroservice.service.impl;
+package com.example.resumemicroservice.modelservice.impl;
 
 import com.example.resumemicroservice.model.Experience;
 import com.example.resumemicroservice.model.Responsibility;
 import com.example.resumemicroservice.repo.ExperienceRepo;
-import com.example.resumemicroservice.service.ExperienceService;
-import com.example.resumemicroservice.service.ResponsibilityService;
+import com.example.resumemicroservice.modelservice.ExperienceService;
+import com.example.resumemicroservice.modelservice.ResponsibilityService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,11 +25,11 @@ public class ExperienceServiceImpl implements ExperienceService {
     }
 
     @Override
-    public Experience createExperience(final Experience experience) {
+    public Experience save(final Experience experience) {
         if(Objects.nonNull(experience.getResponsibilityList())){
             final List<Responsibility> responsibilityList = new ArrayList<>();
             for (Responsibility responsibility:experience.getResponsibilityList()) {
-                responsibilityList.add(responsibilityService.createResponsibility(responsibility));
+                responsibilityList.add(responsibilityService.save(responsibility));
             }
             experience.setResponsibilityList(responsibilityList);
         }
@@ -40,5 +40,16 @@ public class ExperienceServiceImpl implements ExperienceService {
     public Experience getExperienceById(long experienceId) {
         final Optional<Experience> optionalExperience = experienceRepo.findById(experienceId);
         return optionalExperience.orElse(null);
+    }
+
+    @Override
+    public Experience delete(final long experienceId, final long userId) {
+        final Optional<Experience> experienceOptional = experienceRepo.findByExperienceIdAndUserId(experienceId,userId);
+        Experience deletedExperience =null;
+        if(experienceOptional.isPresent()){
+            deletedExperience  =  experienceOptional.get();
+            experienceRepo.delete(deletedExperience);
+        }
+        return deletedExperience;
     }
 }
