@@ -5,6 +5,7 @@ import com.example.resumemicroservice.model.Responsibility;
 public interface ResponsibilityService {
     Responsibility save(Responsibility responsibility);
 
-    interface SkillService {
-    }
+    Responsibility delete(long responsibilityId, long experienceId);
+
+
 }

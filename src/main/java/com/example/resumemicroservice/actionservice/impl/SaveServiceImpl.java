@@ -215,7 +215,7 @@ public class SaveServiceImpl implements SaveService {
                    social.setResumeId(resumeId);
                }
                social.setUserId(user.getUserId());
-               final Social savedSocial = socialService.saveSocial(social);
+               final Social savedSocial = socialService.save(social);
 
                socialList.add(savedSocial);
                user.setSocialList(socialList);

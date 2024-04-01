@@ -31,8 +31,8 @@ public class DeleteController {
 
     @DeleteMapping("/social")
     public ResponseEntity<Response> deleteSocial(@RequestParam long socialId,
-                                                @RequestParam long userId,
-                                                @RequestHeader("Authorization") String token){
+                                                 @RequestParam long userId,
+                                                 @RequestHeader("Authorization") String token){
         return  deleteService.generalDelete(socialId,userId,token,2);
     }
 
@@ -45,10 +45,16 @@ public class DeleteController {
 
     @DeleteMapping("/experience")
     public ResponseEntity<Response> deleteExperience(@RequestParam long experienceId,
-                                                 @RequestParam long userId,
-                                                 @RequestHeader("Authorization") String token){
+                                                     @RequestParam long userId,
+                                                     @RequestHeader("Authorization") String token){
         return  deleteService.generalDelete(experienceId,userId,token,4);
     }
-
+    @DeleteMapping("/responsibility")
+    public ResponseEntity<Response> deleteResponsibility(@RequestParam long experienceId,
+                                                         @RequestParam long responsibilityId,
+                                                         @RequestParam long userId,
+                                                         @RequestHeader("Authorization") String token){
+        return  deleteService.deleteResponsibility(responsibilityId,experienceId,userId,token);
+    }
 
 }

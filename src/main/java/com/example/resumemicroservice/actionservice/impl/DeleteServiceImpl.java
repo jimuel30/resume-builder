@@ -3,6 +3,7 @@ package com.example.resumemicroservice.actionservice.impl;
 import com.example.resumemicroservice.actionservice.DeleteService;
 import com.example.resumemicroservice.auth.JwtService;
 import com.example.resumemicroservice.domain.Response;
+import com.example.resumemicroservice.model.Responsibility;
 import com.example.resumemicroservice.model.User;
 import com.example.resumemicroservice.modelservice.*;
 import com.example.resumemicroservice.util.ResEntityUtil;
@@ -80,6 +81,16 @@ public class DeleteServiceImpl implements DeleteService {
                                                          final long expId,
                                                          final long userId,
                                                          final String token) {
-        return null;
+        final User user = jwtService.extractUser(token);
+        final boolean userOwns = user.getUserId() == userId;
+        ResponseEntity<Response> responseEntity = ResEntityUtil.notFound();
+        if(Objects.nonNull(user) && userOwns){
+            Responsibility deletedResponsibility = experienceService.deleteResponsibility(expId,responsibilityId,user.getUserId());
+            if(Objects.nonNull(deletedResponsibility)){
+                responseEntity = ResEntityUtil.success(deletedResponsibility);
+            }
+
+        }
+        return  responseEntity;
     }
 }

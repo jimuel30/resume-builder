@@ -52,4 +52,17 @@ public class ExperienceServiceImpl implements ExperienceService {
         }
         return deletedExperience;
     }
+
+    @Override
+    public Responsibility deleteResponsibility(final long experienceId,
+                                               final long responsibilityId,
+                                               final long userId) {
+
+        final Optional<Experience> experienceOptional = experienceRepo.findByExperienceIdAndUserId(experienceId,userId);
+        Responsibility deletedResponsibility = null;
+        if(experienceOptional.isPresent()){
+            deletedResponsibility = responsibilityService.delete(responsibilityId,experienceId);
+        }
+        return deletedResponsibility;
+    }
 }
