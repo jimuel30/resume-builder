@@ -4,6 +4,7 @@ import com.example.resumemicroservice.actionservice.GetService;
 import com.example.resumemicroservice.auth.JwtService;
 import com.example.resumemicroservice.domain.Response;
 import com.example.resumemicroservice.domain.UserList;
+import com.example.resumemicroservice.dto.UserDto;
 import com.example.resumemicroservice.model.*;
 import com.example.resumemicroservice.util.ResEntityUtil;
 import com.example.resumemicroservice.util.ResumeUtil;
@@ -45,7 +46,7 @@ public class GetServiceImpl implements GetService {
     }
 
     @Override
-    public ResponseEntity<Response> getResumeById(long resumeId, String token) {
+    public ResponseEntity<Response> getResumeById(final long resumeId, final String token) {
         final User user = jwtService.extractUser(token);
         ResponseEntity<Response> responseEntity = ResEntityUtil.notFound();
         if(Objects.nonNull(user)){
@@ -55,5 +56,21 @@ public class GetServiceImpl implements GetService {
             }
         }
         return responseEntity;
+    }
+
+    @Override
+    public ResponseEntity<Response> getUserDto(final String token) {
+        final User user = jwtService.extractUser(token);
+        ResponseEntity<Response> responseEntity = ResEntityUtil.notFound();
+        if(Objects.nonNull(user)){
+            final UserDto userDto = UserDto.builder()
+                    .userId(user.getUserId())
+                    .middleName(user.getMiddleName())
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName()).build();
+            responseEntity = ResEntityUtil.success(userDto);
+        }
+        return responseEntity;
+
     }
 }

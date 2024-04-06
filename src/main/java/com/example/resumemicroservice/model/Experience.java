@@ -25,7 +25,7 @@ public class Experience {
 
     private String position;
 
-    @OneToMany(mappedBy = "experienceId",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "experienceId",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Responsibility> responsibilityList;
 
     private String startDate;

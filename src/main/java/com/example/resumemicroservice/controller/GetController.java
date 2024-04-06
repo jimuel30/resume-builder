@@ -24,4 +24,9 @@ public class GetController {
                                                   @RequestHeader("Authorization") String token){
         return getService.getResumeById(resumeId,token);
     }
+
+    @GetMapping("/userDto")
+    public ResponseEntity<Response> getUserDto(@RequestHeader("Authorization") String token){
+        return getService.getUserDto(token);
+    }
 }

@@ -16,7 +16,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public ResponseEntity<Response> searchSkillContainingPrefix(String skillPrefix) {
+    public ResponseEntity<Response> searchSkillContainingPrefix(final String skillPrefix) {
         return ResEntityUtil.success(skillService.search(skillPrefix));
     }
 

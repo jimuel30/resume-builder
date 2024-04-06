@@ -51,7 +51,9 @@ public class SaveServiceImpl implements SaveService {
 
 
     @Override
-    public ResponseEntity<Response> saveSkill(final Skill skill, final String token, long resumeId) {
+    public ResponseEntity<Response> saveSkill(final Skill skill,
+                                              final String token,
+                                              final long resumeId) {
 
         final User user = jwtService.extractUser(token);
         ResponseEntity<Response> responseEntity = ResEntityUtil.notFound();
@@ -118,7 +120,9 @@ public class SaveServiceImpl implements SaveService {
     }
 
     @Override
-    public ResponseEntity<Response> saveEducation(final Education education, final String token, final long resumeId) {
+    public ResponseEntity<Response> saveEducation(final Education education,
+                                                  final String token,
+                                                  final long resumeId) {
         final User user = jwtService.extractUser(token);
         ResponseEntity<Response> responseEntity = ResEntityUtil.notFound();
         if(Objects.nonNull(user)){

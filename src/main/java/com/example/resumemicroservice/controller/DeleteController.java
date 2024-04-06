@@ -17,44 +17,39 @@ public class DeleteController {
 
     @DeleteMapping("/education")
     public ResponseEntity<Response> deleteEducation(@RequestParam long educationId,
-                                                    @RequestParam long userId,
                                                     @RequestHeader("Authorization") String token){
-            return  deleteService.generalDelete(educationId,userId,token,0);
+            return  deleteService.generalDelete(educationId,token,0);
     }
 
     @DeleteMapping("/skill")
     public ResponseEntity<Response> deleteSkill(@RequestParam long skillId,
-                                                @RequestParam long userId,
                                                 @RequestHeader("Authorization") String token){
-        return  deleteService.generalDelete(skillId,userId,token,1);
+        return  deleteService.generalDelete(skillId,token,1);
     }
 
     @DeleteMapping("/social")
     public ResponseEntity<Response> deleteSocial(@RequestParam long socialId,
-                                                 @RequestParam long userId,
                                                  @RequestHeader("Authorization") String token){
-        return  deleteService.generalDelete(socialId,userId,token,2);
+        return  deleteService.generalDelete(socialId,token,2);
     }
 
     @DeleteMapping("/resume")
     public ResponseEntity<Response> deleteResume(@RequestParam long resumeId,
-                                                 @RequestParam long userId,
                                                  @RequestHeader("Authorization") String token){
-        return  deleteService.generalDelete(resumeId,userId,token,3);
+        return  deleteService.generalDelete(resumeId,token,3);
     }
 
     @DeleteMapping("/experience")
     public ResponseEntity<Response> deleteExperience(@RequestParam long experienceId,
-                                                     @RequestParam long userId,
+
                                                      @RequestHeader("Authorization") String token){
-        return  deleteService.generalDelete(experienceId,userId,token,4);
+        return  deleteService.generalDelete(experienceId,token,4);
     }
     @DeleteMapping("/responsibility")
     public ResponseEntity<Response> deleteResponsibility(@RequestParam long experienceId,
                                                          @RequestParam long responsibilityId,
-                                                         @RequestParam long userId,
                                                          @RequestHeader("Authorization") String token){
-        return  deleteService.deleteResponsibility(responsibilityId,experienceId,userId,token);
+        return  deleteService.deleteResponsibility(responsibilityId,experienceId,token);
     }
 
 }

@@ -41,13 +41,11 @@ public class DeleteServiceImpl implements DeleteService {
 
     @Override
     public ResponseEntity<Response> generalDelete(final long objectId,
-                                                  final long userId,
                                                   final String token,
                                                   final long deleteType) {
         final User user = jwtService.extractUser(token);
-        final boolean userOwns = user.getUserId() == userId;
         ResponseEntity<Response> responseEntity = ResEntityUtil.notFound();
-        if(Objects.nonNull(user) && userOwns){
+        if(Objects.nonNull(user)){
             Object deletedObject;
             //0 = EDUCATION
             //1 = SKILL
@@ -79,17 +77,14 @@ public class DeleteServiceImpl implements DeleteService {
     @Override
     public ResponseEntity<Response> deleteResponsibility(final long responsibilityId,
                                                          final long expId,
-                                                         final long userId,
                                                          final String token) {
         final User user = jwtService.extractUser(token);
-        final boolean userOwns = user.getUserId() == userId;
         ResponseEntity<Response> responseEntity = ResEntityUtil.notFound();
-        if(Objects.nonNull(user) && userOwns){
+        if(Objects.nonNull(user)){
             Responsibility deletedResponsibility = experienceService.deleteResponsibility(expId,responsibilityId,user.getUserId());
             if(Objects.nonNull(deletedResponsibility)){
                 responseEntity = ResEntityUtil.success(deletedResponsibility);
             }
-
         }
         return  responseEntity;
     }

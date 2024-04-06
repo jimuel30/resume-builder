@@ -7,4 +7,6 @@ public interface GetService {
     ResponseEntity<Response> getUserList(String token);
     ResponseEntity<Response>getResumeById(long resumeId,String token);
 
+    ResponseEntity<Response>getUserDto(String token);
+
 }
