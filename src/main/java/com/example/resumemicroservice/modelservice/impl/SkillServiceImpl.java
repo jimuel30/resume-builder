@@ -20,7 +20,16 @@ public class SkillServiceImpl implements SkillService {
     @Override
     public Skill save(final Skill skill) {
         final  Optional<Skill> optionalSkill = skillRepo.findBySkillNameIgnoreCase(skill.getSkillName());
-        return optionalSkill.orElseGet(() -> skillRepo.save(skill));
+
+        Skill savedSkill;
+        if(optionalSkill.isPresent()){
+            savedSkill = update(optionalSkill.get());
+        }
+        else{
+            savedSkill = skillRepo.save(skill);
+        }
+
+        return savedSkill;
     }
 
     @Override
@@ -37,6 +46,16 @@ public class SkillServiceImpl implements SkillService {
             skillRepo.delete(deletedSkill);
         }
         return deletedSkill;
+    }
+
+    @Override
+    public Skill update(final Skill skill) {
+        final Optional<Skill> skillOptional = skillRepo.findBySkillIdAndUserId(skill.getSkillId(),skill.getUserId());
+        Skill updatedSkill =null;
+        if(skillOptional.isPresent()){
+            updatedSkill = skillRepo.save(skill);
+        }
+        return updatedSkill;
     }
 
 

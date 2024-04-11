@@ -7,4 +7,6 @@ public interface ResumeService {
 
     Resume delete(long resumeId, long userId);
 
+    Resume update(Resume resume);
+
 }

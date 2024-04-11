@@ -9,5 +9,8 @@ public interface ExperienceService {
 
     Experience delete(long experienceId, long userId);
 
-    Responsibility deleteResponsibility(long experienceId, long responsibilityId, long userId);
+
+    Experience update(Experience experience);
+
+
 }

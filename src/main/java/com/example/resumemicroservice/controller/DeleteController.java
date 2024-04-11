@@ -49,7 +49,7 @@ public class DeleteController {
     public ResponseEntity<Response> deleteResponsibility(@RequestParam long experienceId,
                                                          @RequestParam long responsibilityId,
                                                          @RequestHeader("Authorization") String token){
-        return  deleteService.deleteResponsibility(responsibilityId,experienceId,token);
+        return  deleteService.generalDelete(experienceId,token,5);
     }
 
 }

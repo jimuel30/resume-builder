@@ -6,6 +6,7 @@ import com.example.resumemicroservice.repo.ResponsibilityRepo;
 import com.example.resumemicroservice.modelservice.ResponsibilityService;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -19,17 +20,36 @@ public class ResponsibilityServiceImpl implements ResponsibilityService {
 
     @Override
     public Responsibility save(Responsibility responsibility) {
-        return responsibilityRepo.save(responsibility);
+        Responsibility savedResponsibility = update(responsibility);
+        System.out.println(savedResponsibility);
+        if(!Objects.nonNull(savedResponsibility)){
+            savedResponsibility = responsibilityRepo.save(responsibility);
+        }
+        return savedResponsibility;
     }
 
     @Override
     public Responsibility delete(long responsibilityId, long experienceId) {
-        final Optional<Responsibility> responsibilityOptional = responsibilityRepo.findByResponsibilityIdAndExperienceId(responsibilityId,experienceId);
+        final Optional<Responsibility> responsibilityOptional = responsibilityRepo.findByResponsibilityIdAndUserId(responsibilityId,experienceId);
         Responsibility deletedResponsibility =null;
         if(responsibilityOptional.isPresent()){
             deletedResponsibility  =  responsibilityOptional.get();
             responsibilityRepo.delete(deletedResponsibility);
         }
         return deletedResponsibility;
+    }
+
+    @Override
+    public Responsibility update(Responsibility responsibility) {
+        System.out.println("Resa");
+
+        System.out.println(responsibility);
+        final Optional<Responsibility>responsibilityOptional =responsibilityRepo
+                .findByResponsibilityIdAndUserId(responsibility.getResponsibilityId(),responsibility.getUserId());
+        Responsibility updatedresponsibility =null;
+        if(responsibilityOptional.isPresent()){
+            updatedresponsibility =responsibilityRepo.save(responsibility);
+        }
+        return updatedresponsibility;
     }
 }

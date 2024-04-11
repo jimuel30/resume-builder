@@ -3,8 +3,10 @@ package com.example.resumemicroservice.modelservice.impl;
 import com.example.resumemicroservice.model.Resume;
 import com.example.resumemicroservice.modelservice.ResumeService;
 import com.example.resumemicroservice.repo.ResumeRepo;
+import com.fasterxml.jackson.core.ObjectCodec;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -17,7 +19,11 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public Resume save(Resume resume) {
-        return resumeRepo.save(resume);
+        Resume savedResume = update(resume);
+        if(!Objects.nonNull(savedResume)){
+            savedResume =  resumeRepo.save(resume);
+        }
+        return savedResume;
     }
 
     @Override
@@ -29,5 +35,16 @@ public class ResumeServiceImpl implements ResumeService {
             resumeRepo.delete(deletedResume);
         }
         return deletedResume;
+    }
+
+    @Override
+    public Resume update(Resume resume) {
+        final Optional<Resume>resumeOptional =resumeRepo
+                .findByResumeIdAndUserId(resume.getResumeId(),resume.getUserId());
+        Resume updatedResume =null;
+        if(resumeOptional.isPresent()){
+            updatedResume =resumeRepo.save(resume);
+        }
+        return updatedResume;
     }
 }

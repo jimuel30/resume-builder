@@ -66,20 +66,22 @@ public class SaveServiceImpl implements SaveService {
             }
             skill.setUserId(user.getUserId());
             final Skill savedSkill = skillService.save(skill);
-            final List<Skill> skillList = Objects.nonNull(user.getSkillList())?user.getSkillList():new ArrayList<>();
-            skillList.add(savedSkill);
-            user.setSkillList(skillList);
-            userRepo.save(user);
-            responseEntity = ResEntityUtil.success(savedSkill);
+            if(Objects.nonNull(savedSkill)){
+                final List<Skill> skillList = Objects.nonNull(user.getSkillList())?user.getSkillList():new ArrayList<>();
+                skillList.add(savedSkill);
+                user.setSkillList(skillList);
+                userRepo.save(user);
+                responseEntity = ResEntityUtil.success(savedSkill);
 
 
-            if(myResumeNonNull){
-                final List<Skill> resumeSkillList = Objects.nonNull(myResume.getSkillList())
-                        ?user.getSkillList()
-                        :new ArrayList<>();
-                resumeSkillList.add(savedSkill);
-                myResume.setSkillList(resumeSkillList);
-                resumeService.save(myResume);
+                if(myResumeNonNull){
+                    final List<Skill> resumeSkillList = Objects.nonNull(myResume.getSkillList())
+                            ?user.getSkillList()
+                            :new ArrayList<>();
+                    resumeSkillList.add(savedSkill);
+                    myResume.setSkillList(resumeSkillList);
+                    resumeService.save(myResume);
+                }
             }
         }
         return  responseEntity;
@@ -162,12 +164,13 @@ public class SaveServiceImpl implements SaveService {
             if(Objects.nonNull(experienceList)){
                 for (Experience experience:experienceList) {
                     if(experience.getExperienceId()==responsibility.getExperienceId()){
+                        responsibility.setUserId(user.getUserId());
                         final  Responsibility savedResponsibility = responsibilityService.save(responsibility);
                         final  List<Responsibility> responsibilityList = Objects.nonNull(experience.getResponsibilityList())?
                                                                             experience.getResponsibilityList():new ArrayList<>();
                         responsibilityList.add(savedResponsibility);
                         experience.setResponsibilityList(responsibilityList);
-                        final Experience savedExp = experienceService.save(experience);
+                        //final Experience savedExp = experienceService.save(experience);
                         responseEntity = ResEntityUtil.success(savedResponsibility);
                         final Resume myResume = ResumeUtil.resumeChecker(user,resumeId);
                         if(Objects.nonNull(myResume)){
@@ -176,6 +179,7 @@ public class SaveServiceImpl implements SaveService {
                                     :new ArrayList<>();
                             boolean expInResume = false;
                             int expIndex = 0;
+                            final Experience savedExp = experienceService.getExperienceById(responsibility.getExperienceId());
                             for (Experience exp:resumeExpList) {
                                  expInResume = exp.equals(savedExp);
                                  if(expInResume){
@@ -221,20 +225,22 @@ public class SaveServiceImpl implements SaveService {
                social.setUserId(user.getUserId());
                final Social savedSocial = socialService.save(social);
 
-               socialList.add(savedSocial);
-               user.setSocialList(socialList);
-               userRepo.save(user);
-               responseEntity = ResEntityUtil.success(savedSocial);
+              if(Objects.nonNull(savedSocial)){
+                  socialList.add(savedSocial);
+                  user.setSocialList(socialList);
+                  userRepo.save(user);
+                  responseEntity = ResEntityUtil.success(savedSocial);
 
 
-               if(myResumeNonNull){
-                   final List<Social> resumeSocialList = Objects.nonNull(myResume.getEducationList())
-                           ?user.getSocialList()
-                           :new ArrayList<>();
-                   resumeSocialList.add(savedSocial);
-                   myResume.setSocialList(resumeSocialList);
-                   resumeService.save(myResume);
-               }
+                  if(myResumeNonNull){
+                      final List<Social> resumeSocialList = Objects.nonNull(myResume.getEducationList())
+                              ?user.getSocialList()
+                              :new ArrayList<>();
+                      resumeSocialList.add(savedSocial);
+                      myResume.setSocialList(resumeSocialList);
+                      resumeService.save(myResume);
+                  }
+              }
 
            }
         }

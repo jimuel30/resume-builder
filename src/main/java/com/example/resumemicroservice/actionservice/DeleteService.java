@@ -6,5 +6,5 @@ import org.springframework.http.ResponseEntity;
 public interface DeleteService {
     ResponseEntity<Response> generalDelete(long objectId, String token, long deleteType);
 
-    ResponseEntity<Response> deleteResponsibility(long responsibilityId, long expId, String token);
+
 }

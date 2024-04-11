@@ -8,4 +8,8 @@ public interface ResponsibilityService {
     Responsibility delete(long responsibilityId, long experienceId);
 
 
+
+    Responsibility update(Responsibility responsibility);
+
+
 }

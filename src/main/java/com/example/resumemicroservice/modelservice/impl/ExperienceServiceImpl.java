@@ -26,14 +26,20 @@ public class ExperienceServiceImpl implements ExperienceService {
 
     @Override
     public Experience save(final Experience experience) {
-        if(Objects.nonNull(experience.getResponsibilityList())){
-            final List<Responsibility> responsibilityList = new ArrayList<>();
-            for (Responsibility responsibility:experience.getResponsibilityList()) {
-                responsibilityList.add(responsibilityService.save(responsibility));
+
+       Experience exp = update(experience);
+
+        if (!Objects.nonNull(exp)){
+            if(Objects.nonNull(experience.getResponsibilityList())){
+                final List<Responsibility> responsibilityList = new ArrayList<>();
+                for (Responsibility responsibility:experience.getResponsibilityList()) {
+                    responsibilityList.add(responsibilityService.save(responsibility));
+                }
+                experience.setResponsibilityList(responsibilityList);
             }
-            experience.setResponsibilityList(responsibilityList);
+            exp = experienceRepo.save(experience);
         }
-        return experienceRepo.save(experience);
+        return exp;
     }
 
     @Override
@@ -54,15 +60,15 @@ public class ExperienceServiceImpl implements ExperienceService {
     }
 
     @Override
-    public Responsibility deleteResponsibility(final long experienceId,
-                                               final long responsibilityId,
-                                               final long userId) {
-
-        final Optional<Experience> experienceOptional = experienceRepo.findByExperienceIdAndUserId(experienceId,userId);
-        Responsibility deletedResponsibility = null;
-        if(experienceOptional.isPresent()){
-            deletedResponsibility = responsibilityService.delete(responsibilityId,experienceId);
+    public Experience update(final Experience experience) {
+        final Optional<Experience> expOptional = experienceRepo
+                .findByExperienceIdAndUserId( experience.getExperienceId(), experience.getUserId());
+        Experience updatedExperience =null;
+        if(expOptional.isPresent()){
+            updatedExperience = experienceRepo.save(experience);
         }
-        return deletedResponsibility;
+        return updatedExperience;
     }
+
+
 }

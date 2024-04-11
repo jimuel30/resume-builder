@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface ResponsibilityRepo extends JpaRepository<Responsibility, Long> {
 
     Optional<Responsibility> findByResponsibilityIdAndExperienceId(long responsibilityId, long experienceId);
+    Optional<Responsibility> findByResponsibilityIdAndUserId(long responsibilityId, long userId);
 }

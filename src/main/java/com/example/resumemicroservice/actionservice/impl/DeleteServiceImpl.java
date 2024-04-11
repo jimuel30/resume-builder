@@ -25,18 +25,22 @@ public class DeleteServiceImpl implements DeleteService {
 
     private final ExperienceService experienceService;
 
+    private  final ResponsibilityService responsibilityService;
+
     public DeleteServiceImpl(final JwtService jwtService,
                              final EducationService educationService,
                              final SkillService skillService,
                              final SocialService socialService,
                              final ResumeService resumeService,
-                             final ExperienceService experienceService) {
+                             final ExperienceService experienceService,
+                             final ResponsibilityService responsibilityService) {
         this.jwtService = jwtService;
         this.educationService = educationService;
         this.skillService = skillService;
         this.socialService = socialService;
         this.resumeService = resumeService;
         this.experienceService = experienceService;
+        this.responsibilityService = responsibilityService;
     }
 
     @Override
@@ -64,8 +68,11 @@ public class DeleteServiceImpl implements DeleteService {
             else if (3 == deleteType) {
                 deletedObject = resumeService.delete(objectId,user.getUserId());
             }
-            else{
+            else if (4 == deleteType) {
                 deletedObject = experienceService.delete(objectId,user.getUserId());
+            }
+            else{
+                deletedObject = responsibilityService.delete(objectId, user.getUserId());
             }
             if(Objects.nonNull(deletedObject)){
                 responseEntity = ResEntityUtil.success(deletedObject);
@@ -74,18 +81,5 @@ public class DeleteServiceImpl implements DeleteService {
         return  responseEntity;
     }
 
-    @Override
-    public ResponseEntity<Response> deleteResponsibility(final long responsibilityId,
-                                                         final long expId,
-                                                         final String token) {
-        final User user = jwtService.extractUser(token);
-        ResponseEntity<Response> responseEntity = ResEntityUtil.notFound();
-        if(Objects.nonNull(user)){
-            Responsibility deletedResponsibility = experienceService.deleteResponsibility(expId,responsibilityId,user.getUserId());
-            if(Objects.nonNull(deletedResponsibility)){
-                responseEntity = ResEntityUtil.success(deletedResponsibility);
-            }
-        }
-        return  responseEntity;
-    }
+
 }
