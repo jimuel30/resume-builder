@@ -21,7 +21,6 @@ public class ResponsibilityServiceImpl implements ResponsibilityService {
     @Override
     public Responsibility save(Responsibility responsibility) {
         Responsibility savedResponsibility = update(responsibility);
-        System.out.println(savedResponsibility);
         if(!Objects.nonNull(savedResponsibility)){
             savedResponsibility = responsibilityRepo.save(responsibility);
         }
@@ -41,9 +40,6 @@ public class ResponsibilityServiceImpl implements ResponsibilityService {
 
     @Override
     public Responsibility update(Responsibility responsibility) {
-        System.out.println("Resa");
-
-        System.out.println(responsibility);
         final Optional<Responsibility>responsibilityOptional =responsibilityRepo
                 .findByResponsibilityIdAndUserId(responsibility.getResponsibilityId(),responsibility.getUserId());
         Responsibility updatedresponsibility =null;

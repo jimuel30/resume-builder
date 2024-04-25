@@ -87,6 +87,13 @@ public class SaveServiceImpl implements SaveService {
         return  responseEntity;
     }
 
+
+
+
+
+
+
+
     @Override
     public ResponseEntity<Response> saveExperience(final Experience experience,
                                                    final String token,
@@ -159,45 +166,9 @@ public class SaveServiceImpl implements SaveService {
                                                        final long resumeId) {
         final User user = jwtService.extractUser(token);
         ResponseEntity<Response> responseEntity = ResEntityUtil.notFound();
-        if(Objects.nonNull(user)){
-            final List<Experience> experienceList = user.getExperienceList();
-            if(Objects.nonNull(experienceList)){
-                for (Experience experience:experienceList) {
-                    if(experience.getExperienceId()==responsibility.getExperienceId()){
-                        responsibility.setUserId(user.getUserId());
-                        final  Responsibility savedResponsibility = responsibilityService.save(responsibility);
-                        final  List<Responsibility> responsibilityList = Objects.nonNull(experience.getResponsibilityList())?
-                                                                            experience.getResponsibilityList():new ArrayList<>();
-                        responsibilityList.add(savedResponsibility);
-                        experience.setResponsibilityList(responsibilityList);
-                        //final Experience savedExp = experienceService.save(experience);
-                        responseEntity = ResEntityUtil.success(savedResponsibility);
-                        final Resume myResume = ResumeUtil.resumeChecker(user,resumeId);
-                        if(Objects.nonNull(myResume)){
-                            final List<Experience> resumeExpList = Objects.nonNull(myResume.getSkillList())
-                                    ?user.getExperienceList()
-                                    :new ArrayList<>();
-                            boolean expInResume = false;
-                            int expIndex = 0;
-                            final Experience savedExp = experienceService.getExperienceById(responsibility.getExperienceId());
-                            for (Experience exp:resumeExpList) {
-                                 expInResume = exp.equals(savedExp);
-                                 if(expInResume){
-                                     resumeExpList.get(expIndex).getResponsibilityList().add(savedResponsibility);
-                                     break;
-                                 }
-                                 expIndex++;
-                            }
-                            if(!expInResume){
-                                resumeExpList.add(savedExp);
-                            }
-                            myResume.setExperienceList(resumeExpList);
-                            resumeService.save(myResume);
-                        }
-                        break;
-                    }
-                }
-            }
+        if(Objects.nonNull(user)) {
+            responsibility.setUserId(user.getUserId());
+            responseEntity = ResEntityUtil.success(responsibilityService.save(responsibility));
         }
         return responseEntity;
     }
@@ -271,7 +242,24 @@ public class SaveServiceImpl implements SaveService {
     }
 
 
-
+    //add skills to resume
+    @Override
+    public ResponseEntity<Response> batchSaveSkill(List<Skill> skillList, String token, long resumeId) {
+        final User user = jwtService.extractUser(token);
+        ResponseEntity<Response> responseEntity = ResEntityUtil.notFound();
+        final Resume myResume = ResumeUtil.resumeChecker(user,resumeId);
+        final List<Skill> updatedSkillList = new ArrayList<>();
+        if(Objects.nonNull(myResume)){
+            for (Skill skill:skillList) {
+                skill = skillService.save(skill);
+                if(Objects.nonNull(skill)){
+                    updatedSkillList.add(skill);
+                }
+            }
+            responseEntity = ResEntityUtil.success(updatedSkillList);
+        }
+        return responseEntity;
+    }
 
 
 }
